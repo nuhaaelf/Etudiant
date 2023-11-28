@@ -10,6 +10,8 @@ public class EtudiantRequestDTO {
 
 
 	   private Integer idEtudiant;
+	   private String nom;
+	   private String prenom;
 	   private String email;
 
 		}
