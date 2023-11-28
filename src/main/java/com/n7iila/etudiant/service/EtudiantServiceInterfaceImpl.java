@@ -45,7 +45,8 @@ import jakarta.transaction.Transactional;
 		
 		//GET BY ID
 		public EtudiantResponseDTO etudiantById(Integer id) {
-		   Etudiant c=etudiantRepository.findById(id).get();
+			Etudiant c=new Etudiant();
+		    c=etudiantRepository.findById(id).get();
 		  // CompteResponseDTO cr= new CompteResponseDTO();
 		  // BeanUtils.copyProperties(c, c);
 		   EtudiantResponseDTO r= new EtudiantResponseDTO();
@@ -56,8 +57,9 @@ import jakarta.transaction.Transactional;
 		
 		//PUT
 		public void update(Integer id, EtudiantRequestDTO r) {
-			Etudiant c1=etudiantRepository.findById(id).get();
-			    c1=etudiantInterfaceMap.etudiantRequestDTO2Etudiant(r);
+			Etudiant c1=new Etudiant();
+			c1=etudiantRepository.findById(id).get();
+			c1=etudiantInterfaceMap.etudiantRequestDTO2Etudiant(r);
 			    
 			    if (r.getIdEtudiant()!=null) c1.setIdEtudiant(id);
 			    if (r.getEmail()!=null)c1.setEmail(r.getEmail());
@@ -68,7 +70,16 @@ import jakarta.transaction.Transactional;
 		}
 		
 		//DELETE
-		public void supprim(Integer id) {}
+		public void supprim(Integer id) {
+		    // Check if the entity with the given ID exists
+		    if (etudiantRepository.existsById(id)) {
+		        // If it exists, delete the entity
+		        etudiantRepository.deleteById(id);
+		        System.out.println("Etudiant with ID " + id + " has been deleted.");
+		    } else {
+		        System.out.println("Etudiant with ID " + id + " not found. No deletion performed.");
+		    }
+		}
 
 
 	}
